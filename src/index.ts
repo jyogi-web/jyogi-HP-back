@@ -1,23 +1,29 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { cors } from "hono/cors";
+import { AchievementsList } from "./endpoints/achievementsList";
+import { NewsList } from "./endpoints/newsList";
+import { ProjectsList } from "./endpoints/projectsList";
 
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
+
+// CORS設定
+app.use("/api/*", cors({
+	origin: "*",
+	allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+	allowHeaders: ["Content-Type", "Authorization"],
+}));
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
 	docs_url: "/",
 });
 
-// Register OpenAPI endpoints
-openapi.get("/api/tasks", TaskList);
-openapi.post("/api/tasks", TaskCreate);
-openapi.get("/api/tasks/:taskSlug", TaskFetch);
-openapi.delete("/api/tasks/:taskSlug", TaskDelete);
+// jyogi endpoints
+openapi.get("/api/achievements", AchievementsList);
+openapi.get("/api/news", NewsList);
+openapi.get("/api/projects", ProjectsList);
 
 // You may also register routes for non OpenAPI directly on Hono
 // app.get('/test', (c) => c.text('Hono!'))
