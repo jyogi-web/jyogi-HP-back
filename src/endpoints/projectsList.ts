@@ -6,7 +6,7 @@ import { GoogleSheetsResponse } from "../types/googleSheets";
 export class ProjectsList extends OpenAPIRoute {
     schema = {
         tags: ["Projects"],
-        summary: "Get projects list",
+        summary: "プロジェクトの取得",
         responses: {
             "200": {
                 description: "Returns projects list",

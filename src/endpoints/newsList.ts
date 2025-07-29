@@ -6,7 +6,7 @@ import { GoogleSheetsResponse } from "../types/googleSheets";
 export class NewsList extends OpenAPIRoute {
     schema = {
         tags: ["News"],
-        summary: "Get news list",
+        summary: "記事の取得",
         request: {
             query: z.object({
                 limit: z.string().optional().describe("Maximum number of news items to return"),

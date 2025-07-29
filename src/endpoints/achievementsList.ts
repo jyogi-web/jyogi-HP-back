@@ -6,7 +6,7 @@ import { GoogleSheetsResponse } from "../types/googleSheets";
 export class AchievementsList extends OpenAPIRoute {
     schema = {
         tags: ["Achievements"],
-        summary: "Get achievements list",
+        summary: "実績の取得",
         request: {
             query: z.object({
                 limit: z.string().optional().describe("Maximum number of achievements to return"),
