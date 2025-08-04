@@ -8,6 +8,7 @@ declare namespace Cloudflare {
 interface Env extends Cloudflare.Env {
     GOOGLE_SHEETS_API_KEY: string;
     SPREADSHEET_ID: string;
+    ORIGINS: string;
 }
 
 // Begin runtime types
