@@ -9,16 +9,22 @@ import { ProjectsList } from "./endpoints/projectsList";
 const app = new Hono<{ Bindings: Env }>();
 
 // CORS設定
-app.use("/api/*", cors({
-	origin: "*",
-	allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-	allowHeaders: ["Content-Type", "Authorization"],
-}));
-
+app.use("/api/*", async (c, next) => {
+    const Origin = c.env.ORIGINS?.trim();
+    if (!Origin) {
+        return c.json({ error: 'ALLOWED_ORIGINS環境変数が設定されていません' }, 500);
+    }
+    return cors({
+        origin: Origin,
+        allowMethods: ["GET", "POST"],
+        allowHeaders: ["Content-Type", "Authorization"],
+    })(c, next);
+});
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
-	docs_url: "/",
+    docs_url: "/",
 });
+
 
 // jyogi endpoints
 openapi.get("/api/achievements", AchievementsList);
